@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Web</title>
+<style>
+:root {
+  --bg0: #1b0b0f;
+  --bg1: #2a0e11;
+  --panel: #5a1816;
+  --ink: #f0e8e6;
+  --muted: #c9b4b0;
+  --accent: #ff9f6b;
+  --shadow: 0 10px 28px rgba(0,0,0,.45);
+  --radius: 22px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg0);
+}
+a { color: inherit; text-decoration: none; }
+
+/* Pantalla de carga */
+#loading {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+#loading video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#skip {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--accent);
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: var(--panel);
+}
+.nav .links {
+  display: flex;
+  gap: 20px;
+}
+.nav select {
+  background: var(--bg1);
+  color: var(--ink);
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+/* Secciones */
+section {
+  padding: 20px;
+}
+
+/* Vínculos */
+.map-container img {
+  max-width: 100%;
+  border-radius: var(--radius);
+}
+
+/* Novelas */
+.card {
+  background: var(--bg1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.card img {
+  width: 100%;
+  display: block;
+}
+.card .info {
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+
+<!-- Pantalla de carga -->
+<div id="loading">
+  <video id="introVideo" autoplay muted>
+    <source src="intro.mp4" type="video/mp4">
+  </video>
+  <button id="skip">Saltar</button>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="links">
+    <a href="#novelas" data-es="Novelas" data-en="Novels">Novelas</a>
+    <a href="#vinculos" data-es="Vínculos" data-en="Links">Vínculos</a>
+    <a href="#descripcion" data-es="Descripción" data-en="Description">Descripción</a>
+  </div>
+  <select id="langSelect">
+    <option value="es">Español</option>
+    <option value="en">English</option>
+  </select>
+</nav>
+
+<!-- Sección Novelas -->
+<section id="novelas">
+  <h2 data-es="Novelas" data-en="Novels">Novelas</h2>
+  <div class="card">
+    <img src="novela1.jpg" alt="Novela 1">
+    <div class="info">
+      <h3 data-es="Novela Ejemplo" data-en="Example Novel">Novela Ejemplo</h3>
+      <p data-es="Descripción de la novela." data-en="Novel description.">Descripción de la novela.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Sección Vínculos -->
+<section id="vinculos">
+  <h2 data-es="Vínculos" data-en="Links">Vínculos</h2>
+  <div class="map-container">
+    <img src="mapa.jpg" usemap="#amigos" alt="Mapa">
+    <map name="amigos">
+      <area shape="rect" coords="10,10,100,100" href="https://pagina-amigo1.com" target="_blank">
+      <area shape="circle" coords="200,150,50" href="https://pagina-amigo2.com" target="_blank">
+    </map>
+  </div>
+</section>
+
+<!-- Descripción -->
+<section id="descripcion">
+  <h2 data-es="Descripción" data-en="Description">Descripción</h2>
+  <p data-es="Aquí puedes poner una descripción con imágenes."
+     data-en="Here you can put a description with images.">
+     Aquí puedes poner una descripción con imágenes.
+  </p>
+  <img src="descripcion.jpg" alt="Imagen de descripción" style="max-width:100%; border-radius:var(--radius);">
+</section>
+
+<script>
+// Pantalla de carga
+const loading = document.getElementById('loading');
+const video = document.getElementById('introVideo');
+const skip = document.getElementById('skip');
+
+video.onended = () => loading.style.display = 'none';
+skip.onclick = () => loading.style.display = 'none';
+
+// Cambio de idioma
+const langSelect = document.getElementById('langSelect');
+langSelect.onchange = () => {
+  const lang = langSelect.value;
+  document.querySelectorAll('[data-es]').forEach(el => {
+    el.textContent = el.getAttribute(`data-${lang}`);
+  });
+};
+</script>
+
+</body>
+  </html>
